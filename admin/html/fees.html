@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Status</title>
+    <link rel="stylesheet" href="../css/fees.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Fees Status</h1>
+        <table id="feesTable">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Fee Paid</th>
+                </tr>
+            </thead>
+            <tbody id="feesTableBody"></tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevPage">Previous</button>
+            <span id="pageNumber">Page 1</span>
+            <button id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <script src="../../student/js/fees.js" type="module" defer></script>
+</body>
+</html>

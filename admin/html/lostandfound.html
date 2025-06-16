@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Lost & Found</title>
+    <link rel="stylesheet" href="../css/lostandfound.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/lostandfound.js" type="module" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Campus Lost & Found</h1>
+            <p>Report lost items or claim found ones</p>
+        </header>
+
+        <main>
+            <section class="report-section">
+                <h2>Report a Lost Item</h2>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="itemName">Item Name*</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description*</label>
+                        <textarea id="description" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dateLost">Date Lost*</label>
+                        <input type="date" id="dateLost" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location Lost*</label>
+                        <input type="text" id="location" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact">Your Contact Info*</label>
+                        <input type="text" id="contact" required placeholder="Email or phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="itemImage">Upload Image*</label>
+                        <input type="file" id="itemImage" accept="image/*" required>
+                        <div class="image-preview" id="imagePreview">
+                            <img id="previewImage" src="#" alt="Preview" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">Report Lost Item</button>
+                </form>
+            </section>
+
+            <section class="items-section">
+                <h2>Lost & Found Items</h2>
+                <div class="filter-controls">
+                    <select id="statusFilter">
+                        <option value="all">All Items</option>
+                        <option value="lost">Lost Items</option>
+                        <option value="found">Found Items</option>
+                    </select>
+                    <input type="text" id="searchInput" placeholder="Search items...">
+                </div>
+                
+                <div class="items-grid" id="itemsGrid">
+                    <!-- Items will be loaded here -->
+                </div>
+                
+                <div class="pagination">
+                    <button id="prevPage" disabled>Previous</button>
+                    <span id="pageInfo">Page 1 of 1</span>
+                    <button id="nextPage" disabled>Next</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Semesters</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Semester Management</h1>
+
+    <div class="container">
+        <form id="semesterForm">
+            <label for="semesterNumber">Semester Number:</label>
+            <input type="number" id="semesterNumber" min="1" max="8" required>
+
+            <button type="submit">Add Semester</button>
+        </form>
+    </div>
+
+    <h2>Semester List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Semester Number</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="semestersTable"></tbody>
+    </table>
+
+    <script type="module">
+        import { supabase } from "../../util/supabaseClient.js";
+
+        async function fetchSemesters() {
+            const { data, error } = await supabase.from("semester").select("*");
+
+            if (error) {
+                console.error("Error fetching semesters:", error);
+                return;
+            }
+
+            const semestersTable = document.getElementById("semestersTable");
+            semestersTable.innerHTML = "";
+
+            data.forEach((semester) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>Semester ${semester.number}</td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteSemester(${semester.sid})">Delete</button>
+                    </td>
+                `;
+                semestersTable.appendChild(row);
+            });
+        }
+
+        document.getElementById("semesterForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const semesterNumber = parseInt(document.getElementById("semesterNumber").value);
+
+            // Check if semester already exists
+            const { data: existingSemester } = await supabase
+                .from("semester")
+                .select("*")
+                .eq("number", semesterNumber);
+
+            if (existingSemester.length > 0) {
+                alert("Semester already exists!");
+                return;
+            }
+
+            const { error } = await supabase.from("semester").insert([
+                { number: semesterNumber },
+            ]);
+
+            if (error) {
+                console.error("Error adding semester:", error);
+                alert("Failed to add semester.");
+                return;
+            }
+
+            alert("Semester added successfully!");
+            document.getElementById("semesterForm").reset();
+            fetchSemesters();
+        });
+
+        window.deleteSemester = async (semesterId) => {
+            const { error } = await supabase.from("semester").delete().match({ sid: semesterId });
+
+            if (error) {
+                console.error("Error deleting semester:", error);
+                alert("Failed to delete semester.");
+                return;
+            }
+
+            alert("Semester deleted successfully!");
+            fetchSemesters();
+        };
+
+        fetchSemesters();
+    </script>
+
+</body>
+</html>

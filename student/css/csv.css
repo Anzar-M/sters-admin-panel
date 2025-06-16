@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+#importForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#importForm input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+}
+
+#studentTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#studentTable th, 
+#studentTable td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+#studentTable th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+#studentTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#studentTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#exportBtn {
+    display: block;
+    margin: 0 auto 20px;
+    background-color: #28a745;
+}
+
+#exportBtn:hover {
+    background-color: #218838;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+    }
+
+    #studentTable {
+        display: block;
+        overflow-x: auto;
+    }
+
+    #studentTable th, 
+    #studentTable td {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #importForm {
+        flex-direction: column;
+    }
+    
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .pagination-buttons {
+        flex-direction: column;
+    }
+    
+    .pagination-buttons button {
+        width: 100%;
+    }
+}

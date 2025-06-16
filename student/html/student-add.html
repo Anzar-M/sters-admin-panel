@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add student</title>
+    <link rel="stylesheet" href="../../util/style.css">
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h1>Student Registration</h1>
+        <form id="studentForm" method="post">
+            <div class="form-group">
+                <label for="name">Student Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Birth Date</label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="course">Course</label>
+                <select id="course" name="course" required></select>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact No</label>
+                <input type="tel" id="contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semester</label>
+                <select id="semester" name="semester" required></select>
+            </div>
+            <div class="form-group">
+                <label for="division">Division</label>
+                <select id="division" name="division" required></select>
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+
+    <script src="../js/student-add.js" type="module" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.grades-form {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 700px; 
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.grades-form h1 {
+    text-align: center;
+    color: #008f99;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.selectors select {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.selectors select:focus {
+    border-color: #008f99;
+    outline: none;
+}
+
+#gradesTableContainer {
+    margin-top: 20px;
+    display: none;
+}
+
+#studentTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#studentTable thead {
+    background-color: #008f99;
+    color: white;
+}
+
+#studentTable th, 
+#studentTable td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+#studentTable th {
+    font-weight: bold;
+}
+
+#studentTable tbody tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+#studentTable input[type="number"] {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#studentTable input[type="number"]:focus {
+    border-color: #008f99;
+    outline: none;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.pagination-buttons button {
+    padding: 10px 20px;
+    background-color: #008f99;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 100px;
+    transition: background-color 0.3s;
+}
+
+.pagination-buttons button:hover {
+    background-color: #007077;
+}
+
+.pagination-buttons button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#submitGradesBtn {
+    display: block;
+    width: 200px;
+    padding: 12px;
+    margin: 0 auto;
+    background-color: #008f99;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#submitGradesBtn:hover {
+    background-color: #007077;
+}
+
+@media (max-width: 768px) {
+    .grades-form {
+        padding: 20px;
+    }
+    
+    .selectors select {
+        max-width: 100%;
+    }
+    
+    #studentTable th,
+    #studentTable td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    #studentTable input[type="number"] {
+        width: 60px;
+        padding: 6px;
+    }
+}

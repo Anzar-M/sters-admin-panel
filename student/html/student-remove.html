@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Student</title>
+    <link rel="stylesheet" href="../css/student-remove.css">
+</head>
+
+<body>
+    <header>
+        <h1>Remove Student</h1>
+    </header>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevPage">Previous</button>
+            <span id="pageIndicator">Page 1</span>
+            <button id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <script src="../js/student-remove.js" type="module"></script>
+</body>
+
+</html>

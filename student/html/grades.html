@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grades Management</title>
+  <link rel="stylesheet" href="../css/grades.css">
+</head>
+<body>
+
+  <div class="grades-form">
+    <h1>Enter Student Grades</h1>
+
+    <div class="selectors">
+      <select id="courseSelect">
+        <option value="">Select Course</option>
+      </select>
+
+      <select id="semesterSelect" disabled>
+        <option value="">Select Semester</option>
+      </select>
+
+      <select id="divisionSelect" disabled>
+        <option value="">Select Division</option>
+      </select>
+
+      <select id="subjectSelect" disabled>
+        <option value="">Select Subject</option>
+      </select>
+
+    </div>
+
+    <form id="gradeForm">
+      <div id="gradesTableContainer" style="display: none;">
+        <table id="studentTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Internal Marks (Max 50)</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody">
+              <!-- Rows will be injected here -->
+            </tbody>
+        </table>
+
+        <div class="pagination-buttons">
+          <button type="button" id="prevPage" disabled>Previous</button>
+          <button type="button" id="nextPage" disabled>Next</button>
+        </div>
+
+        <button type="submit" id="submitGradesBtn">Submit Grades</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="../js/grades.js" type="module" defer></script>
+</body>
+</html>

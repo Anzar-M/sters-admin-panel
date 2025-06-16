@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data Management</title>
+    <link rel="stylesheet" href="../css/csv.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Student Data Management</h1>
+
+        <form id="importForm" enctype="multipart/form-data">
+            <input type="file" id="csvFileInput" accept=".csv" required>
+            <button type="submit">Import CSV</button>
+        </form>
+
+        <button id="exportBtn" class="export-btn">Export to CSV</button>
+
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Birthdate</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Contact</th>
+                    <th>Password</th>
+                    <th>Semester</th>
+                    <th>Division</th>
+                    <th>Fees</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Records will be inserted dynamically -->
+            </tbody>
+        </table>
+
+        <div class="pagination-buttons">
+            <button id="prevPage" disabled>Previous</button>
+            <button id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="../js/csv.js" type="module" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Subjects</title>
+    <script type="module">
+        import { supabase } from "../../util/supabaseClient.js"; 
+
+        let currentPage = 0;
+        const limit = 10; 
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchCourses();
+            fetchSemesters();
+            fetchSubjects();
+        });
+
+        async function fetchCourses() {
+            const { data, error } = await supabase.from("course").select("cid, course_name");
+            if (error) return console.error("Error fetching courses:", error);
+
+            const courseSelect = document.getElementById("courseId");
+            data.forEach(course => {
+                const option = document.createElement("option");
+                option.value = course.cid;
+                option.textContent = course.course_name;
+                courseSelect.appendChild(option);
+            });
+        }
+
+        async function fetchSemesters() {
+            const { data, error } = await supabase.from("semester").select("sid, number");
+            if (error) return console.error("Error fetching semesters:", error);
+
+            const semesterSelect = document.getElementById("semesterId");
+            data.forEach(semester => {
+                const option = document.createElement("option");
+                option.value = semester.sid;
+                option.textContent = `Semester ${semester.number}`;
+                semesterSelect.appendChild(option);
+            });
+        }
+
+        async function fetchSubjects() {
+            const start = currentPage * limit;
+            const end = start + limit - 1;
+
+            const { data, error, count } = await supabase
+                .from("subject")
+                .select("subject_code, name, course_id, semester_id", { count: "exact" })
+                .order("subject_code", { ascending: true })
+                .range(start, end);
+
+            if (error) return console.error("Error fetching subjects:", error);
+
+            const subjectsTable = document.getElementById("subjectsTable");
+            subjectsTable.innerHTML = "";
+
+            data.forEach(subject => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${subject.name}</td>
+                    <td>${subject.course_id}</td>
+                    <td>${subject.semester_id}</td>
+                    <td><button class="delete-btn" onclick="deleteSubject(${subject.subject_code})">Delete</button></td>
+                `;
+                subjectsTable.appendChild(row);
+            });
+
+            updatePagination(count);
+        }
+
+        function updatePagination(totalCount) {
+            document.getElementById("pageNumber").textContent = `Page ${currentPage + 1}`;
+            document.getElementById("prevPage").disabled = currentPage === 0;
+            document.getElementById("nextPage").disabled = (currentPage + 1) * limit >= totalCount;
+        }
+
+        document.getElementById("prevPage").addEventListener("click", () => {
+            if (currentPage > 0) {
+                currentPage--;
+                fetchSubjects();
+            }
+        });
+
+        document.getElementById("nextPage").addEventListener("click", () => {
+            currentPage++;
+            fetchSubjects();
+        });
+
+        document.getElementById("subjectForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const subjectName = document.getElementById("subjectName").value.trim();
+            const courseId = parseInt(document.getElementById("courseId").value);
+            const semesterId = parseInt(document.getElementById("semesterId").value);
+
+            if (!subjectName || !courseId || !semesterId) return alert("All fields must be filled out.");
+
+            const { error } = await supabase.from("subject").insert([{ name: subjectName, course_id: courseId, semester_id: semesterId }]);
+
+            if (error) return alert("Failed to add subject.");
+
+            alert("Subject added successfully!");
+            document.getElementById("subjectForm").reset();
+            fetchSubjects();
+        });
+
+        window.deleteSubject = async (subjectId) => {
+            const { error } = await supabase.from("subject").delete().match({ subject_code: subjectId });
+
+            if (error) return alert("Failed to delete subject.");
+
+            alert("Subject deleted successfully!");
+            fetchSubjects();
+        };
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Subject Management</h1>
+
+    <div class="container">
+        <form id="subjectForm">
+            <label for="subjectName">Subject Name:</label>
+            <input type="text" id="subjectName" required>
+
+            <label for="courseId">Course:</label>
+            <select id="courseId" required>
+                <option value="">Select Course</option>
+            </select>
+
+            <label for="semesterId">Semester:</label>
+            <select id="semesterId" required>
+                <option value="">Select Semester</option>
+            </select>
+
+            <button type="submit">Add Subject</button>
+        </form>
+
+        <h2>Subjects List</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Course</th>
+                    <th>Semester</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="subjectsTable"></tbody>
+        </table>
+
+        <div class="pagination">
+            <button id="prevPage">Previous</button>
+            <span id="pageNumber">Page 1</span>
+            <button id="nextPage">Next</button>
+        </div>
+    </div>
+
+</body>
+</html>
