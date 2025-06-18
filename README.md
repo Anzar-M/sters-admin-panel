@@ -4,8 +4,7 @@
 
 ## Screenshots
 
-
-<div style="display: flex; gap: 10px;">
+<div align="center" style="display: flex; gap: 10px;">
   <img src="https://github.com/user-attachments/assets/5a8aa67e-e45b-4dd5-94d9-20d893091b29" style="width: 200px; height: auto;">
   <img src="https://github.com/user-attachments/assets/22517e55-44bc-4fb1-8b57-1182e6b3a867" style="width: 300px; height: auto;">
   <img src="https://github.com/user-attachments/assets/586f81d5-5905-4d27-b839-0feaffe61c26" style="width: 350px; height: auto;">
